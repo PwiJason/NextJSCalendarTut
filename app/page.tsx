@@ -11,6 +11,7 @@ import { EventSourceInput } from '@fullcalendar/core/index.js'
 import Nav from './Nav';
 import Calendar from './Calendar';
 import LeftColumn from './LeftColumn';
+import { title } from 'process';
 
 
 interface Event {
@@ -18,6 +19,7 @@ interface Event {
   start: Date | string;
   allDay: boolean;
   id: number;
+  type?: string;
 }
 
 const Home = () => {
@@ -50,6 +52,7 @@ const Home = () => {
     { title: 'event 3', id: '3' },
     { title: 'event 4', id: '4' },
     { title: 'event 5', id: '5' },
+    { title: 'event 6', id: '6', type:'dayOff' },
   ])
   const [allEvents, setAllEvents] = useState<Event[]>([])
   const [showModal, setShowModal] = useState(false)
@@ -136,7 +139,7 @@ const Home = () => {
         <div className="grid grid-cols-12">
         <LeftColumn events={events} />
           <div className="col-span-10">
-          <Calendar events={allEvents} />
+          <Calendar addEvent={addEvent} events={allEvents} />
           </div>
           
         </div>

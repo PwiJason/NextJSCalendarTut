@@ -5,12 +5,12 @@ const Nav = ({ handlePrev, handleNext, handleToday, darkMode, toggleDarkMode }) 
     return (
       <nav className="flex justify-between border-b border-violet-100 p-4">
         <div>
-        <FaBars className="inline-block mr-2" /> {/* Hamburger menu icon */}
-        <FaUserCircle className="inline-block mr-2" /> {/* Profile icon */}
+        <FaBars className="inline-block mr-2" /> 
+        <FaUserCircle className="inline-block mr-2" />
         {darkMode ? (
-          <FaSun className="inline-block" onClick={toggleDarkMode} /> {/* Light mode icon */}
+          <FaSun className="inline-block" onClick={toggleDarkMode} /> 
         ) : (
-          <FaMoon className="inline-block" onClick={toggleDarkMode} /> {/* Dark mode icon */}
+          <FaMoon className="inline-block" onClick={toggleDarkMode} />
         )}
       </div>
         <h1 className="font-bold text-2xl text-gray-700">Date range</h1>

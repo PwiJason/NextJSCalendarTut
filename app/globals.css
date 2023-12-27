@@ -52,3 +52,6 @@ input {
   @apply bg-violet-500 border border-violet-600 ;
   
 }
+.fc-col-header-cell-cushion {
+  text-transform: uppercase;
+}
