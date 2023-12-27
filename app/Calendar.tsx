@@ -90,7 +90,7 @@ const Calendar = ({ events, handleDateClick, addEvent, handleDeleteModal }) => {
                 threeWeeks: {
                   type: 'dayGrid',
                   duration: { weeks: 3 },
-                  dayMaxEventRows: dayMaxEvents,
+                  dayMaxEventRows: 9,
                   buttonText: '3 weeks'
                 }
               }}

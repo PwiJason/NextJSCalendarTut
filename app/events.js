@@ -8,6 +8,7 @@ export const events = [
       end: '2023-12-28',
       allDay: true,
       type: 'dayOff',
+      color: 'green',
       description:'test desc',
     },
     {
@@ -17,6 +18,29 @@ export const events = [
       end: '2023-12-28',
       allDay: true
     },
+    {
+        id: '30',
+        title: 'bEvent 3',
+        start: '2024-01-03',
+        end: '2024-01-04',
+        allDay: true
+      },
+      {
+        id: '40',
+        title: 'aEvent 4',
+        start: '2024-01-03',
+        end: '2024-01-04',
+        allDay: true
+      },
+      {
+        id: '50',
+        title: 'aEvent 5',
+        start: '2024-01-03',
+        end: '2024-01-04',
+        allDay: true,
+        color:'green',
+        type: 'dayOff',
+      },
     // other events with start and end dates
   ];
   
@@ -29,6 +53,7 @@ export const events = [
         salesman: 'test salesman',
         estHours: 'test hours',
         finishBy: 'test date',
+        type:'dayOff'
     },
     {
       id: '4',
