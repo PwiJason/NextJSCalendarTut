@@ -1,12 +1,16 @@
 "use client"
 import FullCalendar from '@fullcalendar/react'
+import { FullCalendarHandles } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable, DropArg } from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { EventSourceInput } from '@fullcalendar/core/index.js'
+import Nav from './Nav';
+import Calendar from './Calendar';
+import LeftColumn from './LeftColumn';
 
 
 interface Event {
@@ -16,9 +20,32 @@ interface Event {
   id: number;
 }
 
-export default function Home() {
+const Home = () => {
+  const calendarRef = useRef<FullCalendarHandles>(null);
+
+  const handleNext = () => {
+    if (calendarRef.current) {
+      let calendarApi = calendarRef.current.getApi();
+      calendarApi.next();
+    }
+  };
+  
+  const handleToday = () => {
+    if (calendarRef.current) {
+      let calendarApi = calendarRef.current.getApi();
+      calendarApi.today();
+    }
+  };
+  const handlePrev = () => {
+    if (calendarRef.current) {
+      let calendarApi = calendarRef.current.getApi();
+      calendarApi.prev();
+    }
+  };
+
+
   const [events, setEvents] = useState([
-    { title: 'event 1', id: '1' },
+    { title: '12345 Stair Job @ Newmar event 1', id: '1' },
     { title: 'event 2', id: '2' },
     { title: 'event 3', id: '3' },
     { title: 'event 4', id: '4' },
@@ -104,46 +131,14 @@ export default function Home() {
 
   return (
     <>
-      <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
-        <h1 className="font-bold text-2xl text-gray-700">Calendar</h1>
-      </nav>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="grid grid-cols-10">
-          <div className="col-span-8">
-            <FullCalendar
-              plugins={[
-                dayGridPlugin,
-                interactionPlugin,
-                timeGridPlugin
-              ]}
-              headerToolbar={{
-                left: 'prev,next today',
-                center: 'title',
-                right: 'resourceTimelineWook, dayGridMonth,timeGridWeek'
-              }}
-              events={allEvents as EventSourceInput}
-              nowIndicator={true}
-              editable={true}
-              droppable={true}
-              selectable={true}
-              selectMirror={true}
-              dateClick={handleDateClick}
-              drop={(data) => addEvent(data)}
-              eventClick={(data) => handleDeleteModal(data)}
-            />
+      <Nav handlePrev={handlePrev} handleNext={handleNext} handleToday={handleToday} />
+      <main className="flex min-h-screen flex-col items-center justify-between">
+        <div className="grid grid-cols-12">
+        <LeftColumn events={events} />
+          <div className="col-span-10">
+          <Calendar events={allEvents} />
           </div>
-          <div id="draggable-el" className="ml-8 w-full border-2 p-2 rounded-md mt-16 lg:h-1/2 bg-violet-50">
-            <h1 className="font-bold text-lg text-center">Unscheduled Tasks</h1>
-            {events.map(event => (
-              <div
-                className="fc-event border-2 p-1 m-2 w-full rounded-md ml-auto text-center bg-white"
-                title={event.title}
-                key={event.id}
-              >
-                {event.title}
-              </div>
-            ))}
-          </div>
+          
         </div>
 
         <Transition.Root show={showDeleteModal} as={Fragment}>
@@ -284,3 +279,4 @@ export default function Home() {
     </>
   )
 }
+export default Home;
