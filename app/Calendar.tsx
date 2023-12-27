@@ -17,8 +17,8 @@ const Calendar = ({ events, handleDateClick, addEvent, handleDeleteModal }) => {
                 timeGridPlugin
               ]}
               headerToolbar={{
-                // left: 'prev,next today',
-                // center: 'title',
+                left: 'today prev,next',
+                center: 'title',
                 right: 'oneWeek twoWeeks threeWeeks dayGridMonth'
                 // left: '',
                 // center: '',
@@ -34,6 +34,19 @@ const Calendar = ({ events, handleDateClick, addEvent, handleDeleteModal }) => {
               dateClick={handleDateClick}
               drop={(data) => addEvent(data)}
               eventClick={(data) => handleDeleteModal(data)}
+              hiddenDays={[0]}
+              eventOrderStrict={true}
+              eventOrder={(a, b) => {
+                // assuming events have a 'type' property that is 'dayOff' for employees who have the day off
+                if (a.extendedProps.type === 'dayOff' && b.extendedProps.type !== 'dayOff') {
+                  return 1; // a is displayed below b
+                } else if (a.extendedProps.type !== 'dayOff' && b.extendedProps.type === 'dayOff') {
+                  return -1; // a is displayed above b
+                } else {
+                  // if both events are the same type, order them by title
+                  return a.title.localeCompare(b.title);
+                }
+              }}
               dayCellContent={(args) => {
                 const date = args.date;
                 const isOtherMonth = date.getMonth() !== new Date().getMonth();

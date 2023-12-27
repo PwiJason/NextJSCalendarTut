@@ -12,8 +12,8 @@ import Nav from './Nav';
 import Calendar from './Calendar';
 import LeftColumn from './LeftColumn';
 import { title } from 'process';
-
-
+import { events, unscheduledEvents } from './events';
+console.log('events',events,'unsch', unscheduledEvents); // Check if events are loaded correctly
 interface Event {
   title: string;
   start: Date | string;
@@ -46,14 +46,15 @@ const Home = () => {
   };
 
 
-  const [events, setEvents] = useState([
-    { title: '12345 Stair Job @ Newmar event 1', id: '1' },
-    { title: 'event 2', id: '2' },
-    { title: 'event 3', id: '3' },
-    { title: 'event 4', id: '4' },
-    { title: 'event 5', id: '5' },
-    { title: 'event 6', id: '6', type:'dayOff' },
-  ])
+  // const [events, setEvents] = useState([
+  //   { title: 'Adam 12345 Stair Job @ Newmar event 1', id: '1', order: 1, color: 'red', description: 'This is a description' },
+  //   { title: 'Dave event 2', id: '2', order: 4, color: 'lightblue', description: 'This is a description' },
+  //   { title: 'Bob event 3', id: '3', order: 2, color: 'gray' },
+  //   { title: 'Peter event 4', id: '4', order: 6, color: 'tan' },
+  //   { title: 'Cal event 5', id: '5', order: 3, },
+  //   { title: 'Eric event 6', id: '6', type:'dayOff', order: 5, },
+  //   { title: 'Eric etest', id: '8', type:'dayOff', },
+  // ])
   const [allEvents, setAllEvents] = useState<Event[]>([])
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -96,6 +97,8 @@ const Home = () => {
   }
 
   function handleDelete() {
+    console.log(idToDelete);
+    console.log('allevents' . allEvents);  
     setAllEvents(allEvents.filter(event => Number(event.id) !== Number(idToDelete)))
     setShowDeleteModal(false)
     setIdToDelete(null)
@@ -139,7 +142,7 @@ const Home = () => {
         <div className="grid grid-cols-12">
         <LeftColumn events={events} />
           <div className="col-span-10">
-          <Calendar addEvent={addEvent} events={allEvents} />
+          <Calendar addEvent={addEvent} events={events} handleDeleteModal={handleDeleteModal} />
           </div>
           
         </div>
